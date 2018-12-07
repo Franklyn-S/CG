@@ -1,0 +1,2 @@
+g++ Vector3.cpp Vector4.cpp Matrix.cpp Mesh.cpp Transform.h GameObject.h Iluminacao.cpp LightSource.cpp Texture.cpp Sphere.cpp Plano.cpp Triangulo.cpp Camera.cpp  Main.cpp -o Main -O2 -L -lm -lpthread -lX11 -lGL -lGLU -lGLEW -lglut -Wno-write-strings && ./Main
+

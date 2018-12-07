@@ -1,0 +1,2 @@
+ g++ Vector3.cpp Transform.h Iluminacao.cpp LightSource.cpp Texture.cpp Sphere.cpp Plano.cpp Triangulo.cpp Camera.cpp Spot.cpp Quadrilatero.cpp Prisma.cpp  Main.cpp -o Main -O2 -L -lm -lpthread -lX11 -lGL -lGLU -lGLEW -lglut -Wno-write-strings && ./Main
+
