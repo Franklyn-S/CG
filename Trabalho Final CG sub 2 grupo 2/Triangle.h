@@ -15,9 +15,9 @@ public:
 	Triangle();
 	Triangle(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p);
 
-	bool RayIntersects(Vec3 raydir, Vec3 rayor, float *t);
+	bool RayIntersects(Vec3 V, Vec3 O, float *t);
 
-	Vec3 getNormal(Vec3 hitPoint);
+	Vec3 getNormal();
 	Texture getTexture();
 	float getPolimento();
 

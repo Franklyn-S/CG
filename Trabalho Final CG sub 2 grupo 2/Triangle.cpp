@@ -1,10 +1,10 @@
 #include "Triangle.h"
 
 Triangle::Triangle(){
-	texture = Texture()
-	pos1 = {0,0,0}:
-	pos2 = {0,0,0}:
-	pos3 = {0,0,0}:
+	texture = Texture();
+	pos1 = {0,0,0};
+	pos2 = {0,0,0};
+	pos3 = {0,0,0};
 	polishing = 1;
 }
 Triangle::Triangle(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p){
@@ -14,12 +14,49 @@ Triangle::Triangle(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p){
 	pos3 = p3;
 	polishing = p;
 }
-//fazer as coisas de Vec3 e vec4
-bool Triangle::RayIntersects(Vec3 raydir, Vec3 rayor, float *t);
+//fazer as coisas de Vec3
+bool Triangle::RayIntersects(Vec3 V, Vec3 O, float *t){
+	Vec3 w1, w2, w3, Pint, n;
+	n = this->getNormal();
+	float vDotn = V.dotProduct(n);
+	if(vDotn = 0.0f){
+		return false;
+	}
+	Vec3 w = pos1 - O;
+	float wDotn = w.dotProduct(n);
+	*t = wDotn/vDotn;
+	
+	Pint = V**t;
+	w1 = pos1 - Pint;
+	w2 = pos2 - Pint;
+	w3 = pos3 - Pint;
+	float x,y,z;
+	x = (w1->*w2).dotProduct(n);
+	y = (w2->*w3).dotProduct(n);
+	z = (w3->*w1).dotProduct(n);
+	if ( ((x>0)&&(y>0)&&(z>0)) || ((x<0)&&(y<0)&&(z<0))){
+		return true;
+	}
+	return false;
 
-Vec3 Triangle::getNormal(Vec3 hitPoint);
-Texture Triangle::getTexture();
-float Triangle::getPolimento();
+}
 
-void Triangle::CameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp);
-void Triangle::WorldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp);
+Vec3 Triangle::getNormal(){
+	Vec3 ray1, ray2;
+	ray1 = (pos2 - pos1).normalize();
+	ray2 = (pos3 - pos2).normalize();
+	return ray2->*ray1;
+}
+Texture Triangle::getTexture(){
+	return this->texture;
+}
+float Triangle::getPolimento(){
+	return polishing;
+}
+
+void Triangle::CameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
+
+}
+void Triangle::WorldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
+
+}
