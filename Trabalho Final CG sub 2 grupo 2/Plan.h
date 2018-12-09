@@ -1,19 +1,19 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
+#ifndef PLAN_H
+#define PLAN_H
 
 #include "Vec3.h"
 #include "Texture.h"
 #include "Object.h"
 
 
-class Triangle: public Object{
+class Plan: public Object{
 public:
 	Texture texture = Texture();
 	Vec3 pos1, pos2, pos3;
 	float polishing;
 
-	Triangle();
-	Triangle(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p);
+	Plan();
+	Plan(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p);
 
 	bool RayIntersects(Vec3 V, Vec3 O, float *t);
 

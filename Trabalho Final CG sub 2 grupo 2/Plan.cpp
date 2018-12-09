@@ -1,14 +1,14 @@
-#include "Triangle.h"
+#include "Plan.h"
 #include "Camera.h"
 
-Triangle::Triangle(){
+Plan::Plan(){
 	texture = Texture();
 	pos1 = {0,0,0};
 	pos2 = {0,0,0};
 	pos3 = {0,0,0};
 	polishing = 1;
 }
-Triangle::Triangle(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p){
+Plan::Plan(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p){
 	texture = t;
 	pos1 = p1;
 	pos2 = p2;
@@ -16,7 +16,7 @@ Triangle::Triangle(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p){
 	polishing = p;
 }
 //fazer as coisas de Vec3
-bool Triangle::RayIntersects(Vec3 V, Vec3 O, float *t){
+bool Plan::RayIntersects(Vec3 V, Vec3 O, float *t){
 	Vec3 w1, w2, w3, Pint, n;
 	n = this->getNormal();
 	float vDotn = V.dotProduct(n);
@@ -42,25 +42,25 @@ bool Triangle::RayIntersects(Vec3 V, Vec3 O, float *t){
 
 }
 
-Vec3 Triangle::getNormal(){
+Vec3 Plan::getNormal(){
 	Vec3 ray1, ray2;
 	ray1 = (pos2 - pos1).normalize();
 	ray2 = (pos3 - pos2).normalize();
 	return ray2->*ray1;
 }
-Texture Triangle::getTexture(){
+Texture Plan::getTexture(){
 	return this->texture;
 }
-float Triangle::getPolimento(){
+float Plan::getPolimento(){
 	return polishing;
 }
 
-void Triangle::cameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
+void Plan::cameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
 	camera_World(camera , lookAt , viewUp , pos1);
 	camera_World(camera , lookAt , viewUp , pos2);
 	camera_World(camera , lookAt , viewUp , pos3);
 }
-void Triangle::worldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
+void Plan::worldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
 	world_Camera(camera , lookAt , viewUp , pos1);
 	world_Camera(camera , lookAt , viewUp , pos2);
 	world_Camera(camera , lookAt , viewUp , pos3);
