@@ -19,7 +19,7 @@ void Desenha(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Pirâmide consistida de 4 trinângulos
-    glLoadIdentity();
+    //glLoadIdentity();
     glTranslatef(-1.5f, 0.0f, -6.0f);  //Move a pirâmide para a esquerda e para tela
     glBegin(GL_TRIANGLES);
        // Frente

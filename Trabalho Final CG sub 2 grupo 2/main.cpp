@@ -46,7 +46,7 @@ vector<Triangle> monkey;
 vector<Object*> scenery;
 vector<Light*> lights;
 
-Plan ground = Plan({0.0f,-256.0f,300.0f},{0,-256,400},{100,-256,300},Texture({0.50,0.16,0.16} , {0.3,0.3,0.3} , {0.3,0.3,0.3}),100.0f);
+Plan ground = Plan({0.0f,-256.0f,300.0f},{0,-256,400},{100,-256,300},Texture({0.50,0.16,0.16} , {0.3,0.3,0.3} , {0.3,0.3,0.3}),100.0);
 
 
 void LoadObj(char* arquivo, vector<Triangle> &triangles, float polishing, Texture t){
@@ -130,7 +130,7 @@ void DrawScene(void){
         lights[k]->worldCamera(camera, lookAt, viewUp);
     }
 
-    ground.worldCamera(camera, lookAt, viewUp);
+    ground.WorldCamera(camera, lookAt, viewUp);
     //levando a câmera para as coordenadas de câmera
     camera_World(camera, lookAt, viewUp, camera);
 
@@ -222,7 +222,7 @@ void DrawScene(void){
     for (int i = 0; i < scenery.size(); i++){
         scenery[i]->CameraWorld(aux, lookAt, viewUp);
     }
-    ground.cameraWorld(aux,lookAt, viewUp);
+    ground.CameraWorld(aux,lookAt, viewUp);
     glEnd();
     glFlush();
 
@@ -279,7 +279,7 @@ void _Keyboard(unsigned char key, int x, int y){
 
 
 
-int main(int argc, char const *argv[]){
+int main(int argc, char** argv){
     LoadObj("Macaco.obj", monkey, 100, Texture({0.62f,0.62f,0.62f} , {0.3f,0.3f,0.3f} , {0.3f,0.3f,0.3f}));
 
     cout << monkey.size() << endl;
@@ -287,7 +287,8 @@ int main(int argc, char const *argv[]){
     cout << "background ok";
 
     //plano infinito
-    Plan ground = Plan({0.0f,-256.0f,300.0f},{0,-256,400},{100,-256,300},Texture({0.50,0.16,0.16} , {0.3,0.3,0.3} , {0.3,0.3,0.3}),100);
+    Texture planTexture = Texture({0.50,0.16,0.16} , {0.3,0.3,0.3} , {0.3,0.3,0.3});
+    Plan ground = Plan({0.0f,-256.0f,300.0f},{0,-256,400},{100,-256,300}, planTexture, 100);
     cout << "ground ok" << endl;
 
 
@@ -296,10 +297,10 @@ int main(int argc, char const *argv[]){
     }
 
     //luz ambiente
-    LightSource sun=LightSource({300000000000.0f,300000000000.0f,00000.0f},{0.9f,0.9f,0.9f});
+    LightSource sun= LightSource({300000000000.0f,300000000000.0f,00000.0f},{0.9f,0.9f,0.9f});
 
     //luzes secundarias
-    LightSource post=LightSource({0000.0f,300000000000.0f,300000000000.0f},{0.9f,0.9f,0.9f});
+    LightSource post = LightSource({0000.0f,300000000000.0f,300000000000.0f},{0.9f,0.9f,0.9f});
     //Spot upper=Spot({0.0f,350.0f,300.0f},{0.9f,0.9f,0.9f});
     lights.push_back(&sun);
     lights.push_back(&post);
