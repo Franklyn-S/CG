@@ -18,7 +18,7 @@ Triangle::Triangle(Vec3 p1, Vec3 p2, Vec3 p3, Texture t, float p){
 //fazer as coisas de Vec3
 bool Triangle::RayIntersects(Vec3 V, Vec3 O, float *t){
 	Vec3 w1, w2, w3, Pint, n;
-	n = this->getNormal();
+	n = this->getNormal({0,0,0});
 	float vDotn = V.dotProduct(n);
 	if(vDotn = 0.0f){
 		return false;
@@ -42,7 +42,7 @@ bool Triangle::RayIntersects(Vec3 V, Vec3 O, float *t){
 
 }
 
-Vec3 Triangle::getNormal(){
+Vec3 Triangle::getNormal(Vec3 hitPoint){
 	Vec3 ray1, ray2;
 	ray1 = (pos2 - pos1).normalize();
 	ray2 = (pos3 - pos2).normalize();
@@ -55,12 +55,12 @@ float Triangle::getPolishing(){
 	return polishing;
 }
 
-void Triangle::cameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
+void Triangle::CameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
 	camera_World(camera , lookAt , viewUp , pos1);
 	camera_World(camera , lookAt , viewUp , pos2);
 	camera_World(camera , lookAt , viewUp , pos3);
 }
-void Triangle::worldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
+void Triangle::WorldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp){
 	world_Camera(camera , lookAt , viewUp , pos1);
 	world_Camera(camera , lookAt , viewUp , pos2);
 	world_Camera(camera , lookAt , viewUp , pos3);

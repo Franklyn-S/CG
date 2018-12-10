@@ -17,12 +17,12 @@ public:
 
 	bool RayIntersects(Vec3 V, Vec3 O, float *t);
 
-	Vec3 getNormal();
+	Vec3 getNormal(Vec3 hitPoint);
 	Texture getTexture();
 	float getPolishing();
 
-	void cameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp);
-	void worldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp);
+	void CameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp);
+	void WorldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp);
 };
 
 #endif

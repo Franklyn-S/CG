@@ -1,1 +1,1 @@
- g++ Vec3.cpp Ilumination.cpp LightSource.cpp Texture.cpp Plan.cpp Triangle.cpp Camera.cpp Main.cpp -o Main -O2 -L -lm -lpthread -lX11 -lGL -lGLU -lGLEW -lglut -Wno-write-strings && ./Main
+g++ Vec3.cpp Ilumination.cpp LightSource.cpp Texture.cpp Plan.cpp Triangle.cpp Camera.cpp main.cpp -o main -O2 -L -lm -lpthread -lX11 -lGL -lGLU -lGLEW -lglut -Wno-write-strings && ./main

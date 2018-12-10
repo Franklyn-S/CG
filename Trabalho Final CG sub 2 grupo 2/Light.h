@@ -6,7 +6,7 @@
 
 class Light {
 public:
-	virtual Vec3 Ilumination(Vec3 observer, Vec3 Pint, Vec3 normalOfFaces, Vec3 texture, float polimento)=0;
+	virtual Vec3 Ilumination(Vec3 observer, Vec3 Pint, Vec3 normalOfFaces, Texture texture, float polimento)=0;
 
 	virtual Vec3 Ilumination(Texture t)= 0;
 	

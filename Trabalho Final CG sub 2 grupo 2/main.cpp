@@ -75,7 +75,7 @@ void LoadObj(char* arquivo, vector<Triangle> &triangles, float polishing, Textur
             if (line[0] == 'g' && line[1] == 'o') continue;
             if (line[0] == 'v' && line[1] == 'n') continue;
             if (line[0] == 'v'){
-                sscanf(processedLine.c_str(), "%lf %lf %lf\n", &vec[0], &vec[1], &vec[2]);
+                sscanf(processedLine.c_str(), "%f %f %f\n", &vec[0], &vec[1], &vec[2]);
                 point.push_back(vec);
             };
             if(line[0] == 'f'){
