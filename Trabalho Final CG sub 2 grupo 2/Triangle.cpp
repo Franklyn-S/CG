@@ -51,7 +51,7 @@ Vec3 Triangle::getNormal(){
 Texture Triangle::getTexture(){
 	return this->texture;
 }
-float Triangle::getPolimento(){
+float Triangle::getPolishing(){
 	return polishing;
 }
 

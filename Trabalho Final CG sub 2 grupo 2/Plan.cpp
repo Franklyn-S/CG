@@ -51,7 +51,7 @@ Vec3 Plan::getNormal(){
 Texture Plan::getTexture(){
 	return this->texture;
 }
-float Plan::getPolimento(){
+float Plan::getPolishing(){
 	return polishing;
 }
 

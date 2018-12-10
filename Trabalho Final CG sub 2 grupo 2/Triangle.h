@@ -19,7 +19,7 @@ public:
 
 	Vec3 getNormal();
 	Texture getTexture();
-	float getPolimento();
+	float getPolishing();
 
 	void cameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp);
 	void worldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp);

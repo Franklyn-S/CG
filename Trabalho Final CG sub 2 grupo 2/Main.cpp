@@ -9,7 +9,7 @@
 #include <vector>
 
 //include da imagem
-#include "CImg.h"
+#include "CImg-2.4.0/CImg.h"
 
 //includes do GL
 #include <GL/glew.h>
@@ -43,10 +43,10 @@ Vec3 lookAt = Vec3(0,-96,300);
 Vec3 viewUp = Vec3(0,150,300);
 
 vector<Triangle> obj;
-vector<Objeto*> scenery;
+vector<Object*> scenery;
 vector<Light*> lights;
 
-Plano ground = Plan({0,-256,300},{0,-256,400},{100,-256,300},100);
+Plan ground = Plan({0.0f,-256.0f,300.0f},{0,-256,400},{100,-256,300},Texture({0.50,0.16,0.16} , {0.3,0.3,0.3} , {0.3,0.3,0.3}),100.0f);
 
 
 void LoadObj(char* arquivo, vector<Triangle> &triangles, float polishing, Texture t){
@@ -177,14 +177,148 @@ void DrawScene(void){
 				//vetor que guarda as posições 
 				vector<int> haveShadow;
 
-				for (int l = 0; l < lights.size(); l++)
-				{
-					/* code */
+				for (int l = 0; l < lights.size(); l++){
+					for(int k=0;k<scenery.size();k++){
+						if(scenery[k]->RayIntersects((lights[l]->getPosition()-hitPoint).normalize(),hitPoint, &t)){
+							//guarda o indice l no haveShadow
+							haveShadow.push_back(l);
+						}
+					}
 				}
 
+				//vetor que vai me ajudar nas posições guardadas
+				vector<bool> shadow;
+				for (int k = 0; k < lights.size(); k++){
+					shadow.push_back(false);
+				}
+				//adicionando true nas posições guardadas
+				for (int k = 0; k < haveShadow.size(); k++){
+					shadow[haveShadow[k]] = true;
+				}
+
+				//inicializando cor
+				Vec3 rgb = {0,0,0};
+				//Pegando a normal que será utilizada
+				Vec3 normal = interceptedObjs[menor]->getNormal(hitPoint);
+
+				//somatorio para a cor
+				for(int k = 0; k<lights.size(); k++){
+					if(shadow[k]==false){
+						rgb = rgb + lights[k]->Ilumination(camera, hitPoint, normal, interceptedObjs[menor]->getTexture(), interceptedObjs[menor]->getPolishing());
+					}
+				}
+
+
+				rgb = rgb + lights[0]->Ilumination(interceptedObjs[menor]->getTexture());
+				glColor3f(rgb[0], rgb[1], rgb[2]);
+				glVertex2f(x,y);
 			}
 
 
 		}
 	}
+	cout <<"Acabou aqui" <<endl;
+
+	for (int i = 0; i < scenery.size(); i++){
+		scenery[k]->cameraWorld(aux, lookAt, viewUp);
+	}
+	ground.cameraWorld(aux,lookAt, viewUp);
+	glEnd();
+	glFlush();
+
+}
+
+
+void _Resize(int w, int h){
+	windowWidth = w;
+	windowHeight = h;
+
+	//redeinição de viewport e projeção
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(-w/2, w/2, -h/2, h/2);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+}
+
+//Eventos do teclado
+void _Keyboard(unsigned char key, int x, int y){
+
+	switch((char) key){
+		case 23:
+			glutDestroyWindow(window);
+			exit(0);
+			break;
+		case GLUT_KEY_F1:
+			camera = {0, 0, -1050};
+			picture = "CubeMap-PiazzaDelPopolo2/front.jpg";
+		case GLUT_KEY_F2:
+			camera = {0, 0, 1050};
+			picture = "CubeMap-PiazzaDelPopolo2/back.jpg";
+		case GLUT_KEY_F3:
+			camera = {1050, 0, 0};
+			picture = "CubeMap-PiazzaDelPopolo2/ceil.jpg";
+		case GLUT_KEY_F4:
+			camera={-1054,0,0};
+			nome="CubeMap-PiazzaDelPopolo2/floor.jpg";
+			break;
+		case GLUT_KEY_F5:
+			camera={0,1050.0f,0};
+			nome="CubeMap-PiazzaDelPopolo2/left.jpg";
+			break;
+		case GLUT_KEY_F6:
+			camera={0,-1050.0f,0};
+			nome="CubeMap-PiazzaDelPopolo2/right.jpg";
+			break;
+	}
+
+	glutPostRedisplay();
+}
+
+
+
+int main(int argc, char const *argv[]){
+	LoadObj("Macaco.obj", monkey, 100, Texture({0.62f,0.62f,0.62f} , {0.3f,0.3f,0.3f} , {0.3f,0.3f,0.3f}));
+
+	cout << monkey.size() << endl;
+
+	cout << "background ok";
+
+	//plano infinito
+	Plan ground = Plan({0.0f,-256.0f,300.0f},{0,-256,400},{100,-256,300},Texture({0.50,0.16,0.16} , {0.3,0.3,0.3} , {0.3,0.3,0.3}),100);
+	cout << "ground ok" << endl;
+
+
+	for(int k =0 ; k<monkey.size() ; k++){
+		scenery.push_back(&monkey[k]);	
+	}
+
+	//luz ambiente	
+    LightSource sun=LightSource({300000000000.0f,300000000000.0f,00000.0f},{0.9f,0.9f,0.9f});
+    
+    //luzes secundarias
+    LightSource post=LightSource({0000.0f,300000000000.0f,300000000000.0f},{0.9f,0.9f,0.9f});
+	//Spot upper=Spot({0.0f,350.0f,300.0f},{0.9f,0.9f,0.9f});
+    lights.push_back(&sun);
+    lights.push_back(&post);
+
+
+    glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+	glutInitWindowSize((int) windowWidth, (int) windowHeight);
+	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH)- windowWidth)/2, (glutGet(GLUT_SCREEN_HEIGHT)- windowHeight)/2);
+	window = glutCreateWindow("Macaco doidao");
+
+	glewExperimental = GL_TRUE;
+
+	glutReshapeFunc(_Resize);
+	glutKeyboardFunc(_Keyboard);
+	glutDisplayFunc(DrawScene);
+
+	glutMainLoop();
+	exit(0);
+
+	return 0;
 }

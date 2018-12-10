@@ -1,5 +1,5 @@
-#ifdef TRIANGLE_H
-#define TRIANGLE_H
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include "Vec3.h"
 #include "Texture.h"
@@ -10,7 +10,7 @@ public:
 
 	virtual Vec3 getNormal(Vec3 hitPoint)=0;
 	virtual Texture getTexture()=0;
-	virtual float getPolimento()=0;
+	virtual float getPolishing()=0;
 
 	virtual void CameraWorld(Vec3 camera, Vec3 lookAt,Vec3 viewUp)=0;
 	virtual void WorldCamera(Vec3 camera, Vec3 lookAt,Vec3 viewUp)=0;
