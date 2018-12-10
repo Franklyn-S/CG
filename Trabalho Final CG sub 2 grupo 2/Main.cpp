@@ -99,4 +99,92 @@ void DrawScene(void){
 	//limpando a tela
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_POINTS);
+
+	CImg<unsigned char> fundo(picture.data());
+
+	//Pintando o fundo
+	for (int i = 0; i < windowWidth; i++){
+		for (int j = 0; j < windowHeight; j++){
+
+			double x, y;
+			x = (i - windowWidth/2);
+			y = (j - windowHeight/2);
+
+			Vec3 Ipix;
+			Ipix[0] = (double)fundo(i, windowHeight-j, 0, 0)/255;
+			Ipix[1] = (double)fundo(i, windowHeight-j, 0, 1)/255;
+			Ipix[2] = (double)fundo(i, windowHeight-j, 0, 2)/255;
+			glColor3f(Ipix[0], Ipix[1], Ipix[2]);
+			glVertex2f(x,y);
+		}
+	}
+
+	//levando o cenário para as coordenadas de câmera
+	Vec3 aux = camera;
+	for (int k = 0; k < scenery.size(); k++){
+		scenery[k]->worldCamera(camera, lookAt, viewUp);
+	}
+
+	//levando as luzes para as coordenadas de câmera
+	for (int k = 0; k < lights.size(); k++){
+		lights[k]->worldCamera(camera, lookAt, viewUp);
+	}	
+
+	ground.worldCamera(camera, lookAt, viewUp);
+	//levando a câmera para as coordenadas de câmera
+	camera_World(camera, lookAt, viewUp, camera);
+
+	for (int i = 0; i < windowWidth; i++){
+		for (int j = 0; j < windowHeight; j++){
+
+			double x, y;
+			x = (i - windowWidth/2);
+			y = (j - windowHeight/2);
+
+			//vetor de objetos atingidos pelo raio
+			vector<Object*> interceptedObjs
+			//vetor que guarda a dinstancia do ray
+			vector<float> distances;
+			float t;
+
+			Vec3 point = {x, y, 150};
+
+
+			for(int k=0;k<scenery.size();k++){
+				if(scenery[k]->RayIntersects( (point - camera),camera ,&t)){
+					distances.push_back(t);
+					interceptedObjs.push_back(scenery[k]);
+				}
+				
+			}
+
+			if(ground.RayIntersects((point - camera), camera, &t)){
+				distances.push_back(t);
+				interceptedObjs.push_back(&ground);
+			}
+
+			if(distances.size() != 0){ //interceptei alguém
+				int menor = 0;
+				//laço para descobrir a menor distância
+				for (int i = 0; i < distances.size(); i++){
+					if(distances[menor] > distances[k]){
+						menor = k;
+					}
+				}
+				//calculo do ponto a ser exibido (ponto de origem do raio + direção do raio * distância)
+				Vec3 hitPoint = camera + (point-camera)*distances[menor];
+
+				//vetor que guarda as posições 
+				vector<int> haveShadow;
+
+				for (int l = 0; l < lights.size(); l++)
+				{
+					/* code */
+				}
+
+			}
+
+
+		}
+	}
 }
