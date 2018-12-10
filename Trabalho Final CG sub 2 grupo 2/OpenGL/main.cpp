@@ -1,4 +1,4 @@
-#include <stdlib.h>
+﻿#include <stdlib.h>
 #include <GL/glut.h>
 #include <iostream>
 #include <cmath>
@@ -17,6 +17,54 @@ void Desenha(void)
 {
     // Limpa a janela e o depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Pirâmide consistida de 4 trinângulos
+    glLoadIdentity();
+    glTranslatef(-1.5f, 0.0f, -6.0f);  //Move a pirâmide para a esquerda e para tela
+    glBegin(GL_TRIANGLES);
+       // Frente
+       glColor3f(1.0f, 0.0f, 0.0f);     // Red
+       glVertex3f( 0.0f, 1.0f, 0.0f);
+       glColor3f(0.0f, 1.0f, 0.0f);     // Green
+       glVertex3f(-1.0f, -1.0f, 1.0f);
+       glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+       glVertex3f(1.0f, -1.0f, 1.0f);
+
+       // Direita
+       glColor3f(1.0f, 0.0f, 0.0f);     // Red
+       glVertex3f(0.0f, 1.0f, 0.0f);
+       glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+       glVertex3f(1.0f, -1.0f, 1.0f);
+       glColor3f(0.0f, 1.0f, 0.0f);     // Green
+       glVertex3f(1.0f, -1.0f, -1.0f);
+
+       // Trás
+       glColor3f(1.0f, 0.0f, 0.0f);     // Red
+       glVertex3f(0.0f, 1.0f, 0.0f);
+       glColor3f(0.0f, 1.0f, 0.0f);     // Green
+       glVertex3f(1.0f, -1.0f, -1.0f);
+       glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+       glVertex3f(-1.0f, -1.0f, -1.0f);
+
+       // Esquerda
+       glColor3f(1.0f,0.0f,0.0f);       // Red
+       glVertex3f( 0.0f, 1.0f, 0.0f);
+       glColor3f(0.0f,0.0f,1.0f);       // Blue
+       glVertex3f(-1.0f,-1.0f,-1.0f);
+       glColor3f(0.0f,1.0f,0.0f);       // Green
+       glVertex3f(-1.0f,-1.0f, 1.0f);
+    glEnd();
+
+    //Plano que simboliza grama
+    glLoadIdentity();
+    glTranslatef(1.5f, 0.0f, -7.0f);
+    glBegin(GL_QUADS);
+     glColor3f(0.0f, 0.3f, 0.0f);//Grama
+     glVertex3f( 100.0f, -1.0f,  100.0f);
+     glVertex3f(-100.0f, -1.0f,  100.0f);
+     glVertex3f(-100.0f, -1.0f, -100.0f);
+     glVertex3f( 100.0f, -1.0f, -100.0f);
+   glEnd();
 
     glLoadIdentity();                 // Reseta a matriz do modelo
     glTranslatef(1.5f, 0.0f, -7.0f);  // Move para a direita e para a tela
@@ -65,53 +113,7 @@ void Desenha(void)
           glVertex3f(1.0f, -1.0f, -1.0f);
        glEnd();
 
-       // Pirâmide consistida de 4 trinângulos
-       glLoadIdentity();
-       glTranslatef(-1.5f, 0.0f, -6.0f);  //Move a pirâmide para a esquerda e para tela
-       glBegin(GL_TRIANGLES);
-          // Frente
-          glColor3f(1.0f, 0.0f, 0.0f);     // Red
-          glVertex3f( 0.0f, 1.0f, 0.0f);
-          glColor3f(0.0f, 1.0f, 0.0f);     // Green
-          glVertex3f(-1.0f, -1.0f, 1.0f);
-          glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-          glVertex3f(1.0f, -1.0f, 1.0f);
 
-          // Direita
-          glColor3f(1.0f, 0.0f, 0.0f);     // Red
-          glVertex3f(0.0f, 1.0f, 0.0f);
-          glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-          glVertex3f(1.0f, -1.0f, 1.0f);
-          glColor3f(0.0f, 1.0f, 0.0f);     // Green
-          glVertex3f(1.0f, -1.0f, -1.0f);
-
-          // Trás
-          glColor3f(1.0f, 0.0f, 0.0f);     // Red
-          glVertex3f(0.0f, 1.0f, 0.0f);
-          glColor3f(0.0f, 1.0f, 0.0f);     // Green
-          glVertex3f(1.0f, -1.0f, -1.0f);
-          glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-          glVertex3f(-1.0f, -1.0f, -1.0f);
-
-          // Esquerda
-          glColor3f(1.0f,0.0f,0.0f);       // Red
-          glVertex3f( 0.0f, 1.0f, 0.0f);
-          glColor3f(0.0f,0.0f,1.0f);       // Blue
-          glVertex3f(-1.0f,-1.0f,-1.0f);
-          glColor3f(0.0f,1.0f,0.0f);       // Green
-          glVertex3f(-1.0f,-1.0f, 1.0f);
-       glEnd();
-
-       //Plano que simboliza grama
-       glLoadIdentity();
-       glTranslatef(1.5f, 0.0f, -7.0f);
-       glBegin(GL_QUADS);
-        glColor3f(0.0f, 0.3f, 0.0f);//Grama
-        glVertex3f( 100.0f, -1.0f,  100.0f);
-        glVertex3f(-100.0f, -1.0f,  100.0f);
-        glVertex3f(-100.0f, -1.0f, -100.0f);
-        glVertex3f( 100.0f, -1.0f, -100.0f);
-      glEnd();
 
 
       //Plano que simboliza o céu
@@ -317,6 +319,8 @@ void TeclasEspeciais (int tecla, int x, int y){
                             break;
     case GLUT_KEY_END: if(angle <= 150) angle +=5;
                         break;
+    //case GLUT_KEY_F1
+
     }
 
    EspecificaParametrosVisualizacao();

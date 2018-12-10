@@ -22,7 +22,7 @@ void Desenha(void)
 
     // Desenha o teapot com a cor corrente (solid)
     glTranslatef(0.0f, 0.0f, -7.0f); // coloca o objeto no meio da tela
-    glutSolidTeapot(1.0f);
+    glutSolidTeapot(50.0f);
 
     glutSwapBuffers();
 }
